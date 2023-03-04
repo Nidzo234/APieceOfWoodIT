@@ -1,0 +1,72 @@
+﻿@model IEnumerable<APieceOfWoodIT.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center mg-a">Сите производи</h2>
+@if (User.IsInRole("Administrator"))
+{
+    <p class="text-center mg-a">
+        <a href="/products/Create" class="btn btn-success">Create New</a>
+    </p>
+ }
+
+<form class="form-inline text-center mg-a">
+    <div style="margin:auto">
+        <input class="form-control" onkeyup="myFunction()" id="input" style="width:550px" type="search" placeholder="Search" aria-label="Search">
+    </div>
+</form>
+
+
+
+
+<div class="card-group" id="glaven">
+    @foreach (var item in Model)
+    {
+        <div class="card m-4" style="width: 18rem; min-width:500px">
+            <img class="card-img-top" src=@item.ImageUrl alt="Card image cap">
+            <div class="card-body" id="card">
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">@item.Description</p>
+                <p class="card-text">Цена:@item.Price</p>
+                <a href="products/Details/@item.ProductId" class="card-text"><small class="text-muted">Повеќе детали</small></a>
+                @if (!User.IsInRole("Administrator"))
+                {
+                    <section style="text-align:center; margin:5px">
+                        <a href="products/AddToCard/@item.ProductId" class="btn btn-success" style="width:80%">Add to card</a>
+                    </section>
+                }
+                @if (User.IsInRole("Administrator"))
+                {
+                    <section style="text-align:center">
+                        <a href="products/Edit/@item.ProductId" class="btn btn-success">Edit</a>
+                        <a href="products/Details/@item.ProductId" class="btn btn-info">Details</a>
+                        <a href="products/Delete/@item.ProductId" class="btn btn-danger">Delete</a>
+                    </section>
+                }
+            </div>
+        </div>
+    }
+
+    <script>
+        function myFunction() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById("input");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("glaven");
+            li = ul.getElementsByTagName("div");
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("h5")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+
+        }
+    </script>
+
+</div>

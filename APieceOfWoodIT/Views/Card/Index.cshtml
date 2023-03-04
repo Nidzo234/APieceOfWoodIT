@@ -1,0 +1,52 @@
+﻿@model IEnumerable<APieceOfWoodIT.Models.Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="mg-a text-center">Кошничка</h2>
+
+
+
+
+
+
+
+    @foreach (var item in Model)
+    {
+        <div class="card" style="flex-direction:row; height:150px; margin-top:20px">
+            <div  style="width:24%; display:inline-block">
+                <img class="card-img-left" src=@item.ImageUrl style="max-height:150px"  alt="Card image cap">   
+            </div>
+            <div  style="width: 24%; display:inline-block">
+                <h5 class="card-title">@item.Name</h5>
+            </div>
+            <div  style="width: 24%; display:inline-block">
+                <p class="card-text">@item.Description</p>
+            </div>
+            <div style="width: 24%; display:inline-block">
+                <p class="card-text">@item.Price</p>
+                <a href="card/Delete/@item.ProductId" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+        
+
+       
+    }
+
+
+
+@if (Model.Count().Equals(0))
+{
+    <div style="text-align:center; margin:20px">
+        <p>Вашата кошничка е празна</p>
+        <button class="btn btn-outline-success my-2 my-sm-0"  type="button" disabled>НАРАЧАЈ!!</button>
+    </div>
+    
+}
+else
+{
+    <div style="text-align: center; margin: 20px">
+        <a href="/card/AddOrder" class="btn btn-outline-success my-2 my-sm-0" >НАРАЧАЈ!!</a>
+    </div>
+}
+
